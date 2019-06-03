@@ -1,0 +1,16 @@
+Function Get-BoatReport {
+    $GPSData = gpspipe -w -n 5 | ConvertFrom-Json | Where-Object Class -EQ "TPV" | Select-Object -Last 1
+    $IpifyRequest = Invoke-WebRequest -Uri api.ipify.org
+
+    New-Object -TypeName psobject -Property @{
+        HasInternet       = (($IpifyRequest).StatusDescription -EQ "OK")
+        ExternalIP        = $IpifyRequest.Content
+        TimeStampRaw      = (Get-Date -Format o)
+        TimeStampFriendly = (Get-Date).ToString('dd.MM.yyyy HH:mm')
+        GPS               = @{
+            Latitude   = $GPSData.lat
+            Longtitude = $GPSData.lon
+            Speed      = $GPSData.speed
+        }
+    }
+}

@@ -19,3 +19,8 @@ wget -O - https://syncthing.net/release-key.txt | sudo apt-key add -
 echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee -a /etc/apt/sources.list.d/syncthing-release.list
 sudo apt update
 sudo apt install syncthing -y
+
+sudo reboot
+
+# gpsd config
+# in etc/default/gpsd, might be required to specify device with DEVICES="/dev/ttyUSB0"

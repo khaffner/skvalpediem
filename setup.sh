@@ -13,3 +13,9 @@ sudo ln -s ~/powershell/pwsh /usr/bin/pwsh
 
 # Set baud rade, assuming device is ttyUSB0
 sudo stty -F /dev/ttyUSB0 4800 # Not permanent?
+
+# Install Syncthing
+wget -O - https://syncthing.net/release-key.txt | sudo apt-key add -
+echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee -a /etc/apt/sources.list.d/syncthing-release.list
+sudo apt update
+sudo apt install syncthing -y

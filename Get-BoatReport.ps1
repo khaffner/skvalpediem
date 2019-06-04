@@ -3,10 +3,13 @@ Function Get-BoatReport {
     $IpifyRequest = Invoke-WebRequest -Uri api.ipify.org
 
     New-Object -TypeName psobject -Property @{
-        HasInternet       = (($IpifyRequest).StatusDescription -EQ "OK")
-        ExternalIP        = $IpifyRequest.Content
         TimeStampRaw      = (Get-Date -Format o)
         TimeStampFriendly = (Get-Date).ToString('dd.MM.yyyy HH:mm')
+        Network           = @{
+            HasInternet   = (($IpifyRequest).StatusDescription -EQ "OK")
+            ExternalIP    = $IpifyRequest.Content
+            InternalIP    = ((hostname -I).Split(' ') | Select-Object -SkipLast 1)
+        }
         GPS               = @{
             Latitude   = $GPSData.lat
             Longtitude = $GPSData.lon

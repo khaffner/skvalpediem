@@ -14,6 +14,7 @@ Function Get-BoatReport {
             Latitude   = $GPSData.lat
             Longtitude = $GPSData.lon
             Speed      = $GPSData.speed
+            GoogleMaps = "https://www.google.com/maps/place/$($GPSData.lat),$($GPSData.lon)"
         }
     }
 }

@@ -9,5 +9,7 @@ if(!(Test-Path $DataDir)) {
 
 $NewData = Get-BoatReport
 
-$PrevData = Get-Content $DataFile -ErrorAction SilentlyContinue | ConvertFrom-Json
-$PrevData,$NewData | ConvertTo-Json | Out-File -FilePath $DataFile -Force | Out-Null
+[object[]]$Data = @()
+$Data += (Get-Content $DataFile -ErrorAction SilentlyContinue | ConvertFrom-Json)
+$Data += $NewData
+$Data | ConvertTo-Json | Out-File -FilePath $DataFile -Force | Out-Null

@@ -1,5 +1,5 @@
 Function Get-BoatReport {
-    $GPSData = gpspipe -w -n 5 | ConvertFrom-Json | Where-Object Class -EQ "TPV" | Select-Object -Last 1
+    $GPSData = gpspipe -w -n 10 | ConvertFrom-Json | Where-Object Class -EQ "TPV" | Where-Object lat -ne $null
     $IpifyRequest = Invoke-WebRequest -Uri api.ipify.org
 
     New-Object -TypeName psobject -Property @{
@@ -11,9 +11,9 @@ Function Get-BoatReport {
             InternalIP    = ((hostname -I).Split(' ') | Select-Object -SkipLast 1)
         }
         GPS               = @{
-            Latitude   = $GPSData.lat
-            Longtitude = $GPSData.lon
-            Speed      = $GPSData.speed
+            Latitude   = ($GPSData.lat | Measure-Object -Average).Average
+            Longtitude = ($GPSData.lon | Measure-Object -Average).Average
+            Speed      = ($GPSData.speed  | Measure-Object -Average).Average
             GoogleMaps = "https://www.google.com/maps/place/$($GPSData.lat),$($GPSData.lon)"
         }
     }

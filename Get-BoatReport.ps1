@@ -26,7 +26,7 @@ Function Get-BoatReport {
             Services = @{
                 syncthing  = ($Processes.Name -contains 'syncthing')
                 gpsd       = ($Processes.Name -contains 'gpsd')
-                ssh        = ($Processes.Name -contains 'sshd')
+                sshd       = ($Processes.Name -contains 'sshd')
                 vncagent   = ($Processes.Name -contains 'vncagent')
                 bluetoothd = ($Processes.Name -contains 'bluetoothd')
             }

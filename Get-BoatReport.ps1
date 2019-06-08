@@ -30,6 +30,7 @@ Function Get-BoatReport {
                 sshd       = ($Processes.Name -contains 'sshd')
                 vncagent   = ($Processes.Name -contains 'vncagent')
                 bluetoothd = ($Processes.Name -contains 'bluetoothd')
+                vnstatd    = ($Processes.Name -contains 'vnstatd')
             }
             Uptime   = @{
                 Days  = $Uptime.Days

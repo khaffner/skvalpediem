@@ -12,4 +12,4 @@ $NewData = Get-BoatReport
 [object[]]$Data = @()
 $Data += (Get-Content $DataFile -ErrorAction SilentlyContinue | ConvertFrom-Json)
 $Data += $NewData
-$Data | ConvertTo-Json | Out-File -FilePath $DataFile -Force | Out-Null
+$Data | ConvertTo-Json -Depth 5 | Out-File -FilePath $DataFile -Force | Out-Null

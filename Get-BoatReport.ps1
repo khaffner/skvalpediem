@@ -15,6 +15,7 @@ Function Get-BoatReport {
             HasInternet = (($IpifyRequest).StatusDescription -EQ "OK")
             ExternalIP  = $IpifyRequest.Content
             InternalIP  = ((hostname -I).Split(' ') | Select-Object -SkipLast 1)
+            Traffic     = (vnstat --json | ConvertFrom-Json)
         }
         GPS               = @{
             Latitude   = $GPSLatitude

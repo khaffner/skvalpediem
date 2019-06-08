@@ -7,6 +7,8 @@ if(!(Test-Path $DataDir)) {
     New-Item $Datadir -ItemType Directory
 }
 
+vnstati -vs -i enxb827eb2b9087+wlan0 -o /home/pi/boatdata/datausage.png
+
 $NewData = Get-BoatReport
 
 [object[]]$Data = @()

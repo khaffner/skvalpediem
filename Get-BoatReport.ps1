@@ -21,6 +21,7 @@ Function Get-BoatReport {
             Longtitude = $GPSLongtitude
             Speed      = $GPSSpeed
             GoogleMaps = "https://www.google.com/maps/place/$GPSLatitude,$GPSLongtitude"
+            GuleSider  = "https://kart.gulesider.no/?c=$GPSLatitude,$GPSLongtitude&z=16&l=nautical"
         }
         System            = @{
             Services = @{

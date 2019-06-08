@@ -20,6 +20,12 @@ echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee -a /etc/apt/so
 sudo apt update
 sudo apt install syncthing -y
 
+# Install vnstat
+sudo apt-get install vnstat
+sudo vnstat -u -i wlan0 #or whatever interface to monitor
+sudo systemctl start vnstat.service
+sudo systemctl enable vnstat.service
+
 sudo reboot
 
 # gpsd config

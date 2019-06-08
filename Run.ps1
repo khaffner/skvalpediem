@@ -6,7 +6,8 @@ if(!(Test-Path $DataDir)) {
     New-Item $Datadir -ItemType Directory
 }
 
-vnstati -vs -i enxb827eb2b9087+wlan0 -o "$DataDir/web/datausage.png"
+$NetworkInterfaces = ((ip link show | Select-String -Pattern ': ').Line.Split(': ') | select -Index 4,7) -join '+'
+vnstati -vs -i $NetworkInterfaces -o "$DataDir/web/datausage.png"
 
 $NewData = Get-BoatReport
 

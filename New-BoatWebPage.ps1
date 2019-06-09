@@ -1,4 +1,4 @@
-. ./Get-BoatReport.ps1
+. $PSScriptRoot/Get-BoatReport.ps1
 
 $Data = Get-BoatReport
 

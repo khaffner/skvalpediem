@@ -7,7 +7,7 @@ if(!(Test-Path $DataDir)) {
 }
 
 $NetworkInterfaces = ((ip link show | Select-String -Pattern ': ').Line.Split(': ') | select -Index 4,7) -join '+'
-vnstati -vs -i $NetworkInterfaces -o "$DataDir/web/datausage.png"
+vnstati -vs -i $NetworkInterfaces -o "$DataDir/datausage.png"
 
 $NewData = Get-BoatReport
 
@@ -16,8 +16,4 @@ $Data += (Get-Content "$DataDir/rawdata.json" -ErrorAction SilentlyContinue | Co
 $Data += $NewData
 $Data | ConvertTo-Json -Depth 10 | Out-File -FilePath "$DataDir/rawdata.json" -Force | Out-Null
 
-. $PSScriptRoot/New-BoatWebPage.ps1
-
-Get-Job -Name webserver -ErrorAction SilentlyContinue | Stop-Job
-Get-Job | Where-Object State -EQ 'Stopped' | Remove-Job
-Start-Job -Name webserver -ScriptBlock {Set-Location $env:HOME/boatdata/web/;python3 -m http.server 8080} | Out-Null
+. $PSScriptRoot/New-Dashboard.ps1

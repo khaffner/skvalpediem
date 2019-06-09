@@ -19,4 +19,5 @@ $Data | ConvertTo-Json -Depth 10 | Out-File -FilePath "$DataDir/rawdata.json" -F
 . $PSScriptRoot/New-BoatWebPage.ps1
 
 Get-Job -Name webserver -ErrorAction SilentlyContinue | Stop-Job
+Get-Job | Where-Object State -EQ 'Stopped' | Remove-Job
 Start-Job -Name webserver -ScriptBlock {Set-Location $env:HOME/boatdata/web/;python3 -m http.server 8080} | Out-Null

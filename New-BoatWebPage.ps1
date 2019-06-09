@@ -29,13 +29,14 @@ body {
     height="600"
 ></iframe>
 <a href="https://kart.gulesider.no/?c=$($Data.GPS.Latitude),$($Data.GPS.Longtitude)&z=15&l=nautical&fs=true">Click here for full map</a>
+<p></p>
 
-<p>Network stats</p>
 <img 
     src="datausage.png"
     width="800"
     height="600"
 >
+Network stats
  
 </body>
 </html>

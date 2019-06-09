@@ -1,7 +1,7 @@
 . $PSScriptRoot/Get-BoatReport.ps1
 $Data = Get-BoatReport
 
-$Page_Home = New-UDPage -Name Home -Icon home -Title "Home" -Content {New-UDCard -Title "Home"}
+$Page_Home = New-UDPage -Name Home -Icon home -Title "Home" -Content {New-UDCard -Title "Last updated: $($Data.TimeStampFriendly)"}
 $Page_Map = New-UDPage -Name Map -Icon map -Title "Map" -Content {New-UDHtml -Markup "<iframe src=`"https://kart.gulesider.no/?c=$($Data.GPS.Latitude),$($Data.GPS.Longtitude)&z=15&l=nautical&fs=true`", width=`"800`" height=`"600`"></iframe>"}
 $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network usage" -Content {New-UDImage -Path $env:HOME/boatdata/datausage.png -Width 640 -Height 480}
 

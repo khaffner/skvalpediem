@@ -10,24 +10,34 @@ $HtmlContent = @"
 <head>
 <title>Skvalpe Diem</title>
 </head>
- 
+
+<style>
+body {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto
+}
+</style>
+
 <body>
  
 <h1>Skvalpe Diem</h1>
 
-<p>Map</p>
 <iframe 
     src="https://kart.gulesider.no/?c=$($Data.GPS.Latitude),$($Data.GPS.Longtitude)&z=15&l=nautical&fs=true" 
-    frameborder="", 
     width="800" 
     height="600"
 ></iframe>
+<a href="https://kart.gulesider.no/?c=$($Data.GPS.Latitude),$($Data.GPS.Longtitude)&z=15&l=nautical&fs=true">Click here for full map</a>
 
 <p>Network stats</p>
-<img src="datausage.png" alt="">
+<img 
+    src="datausage.png"
+    width="800"
+    height="600"
+>
  
 </body>
-
 </html>
 "@
 

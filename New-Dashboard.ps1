@@ -24,7 +24,7 @@ $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
     }
 }
 
-$Navigation = New-UDSideNav -Fixed -Content {
+$Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Home" -PageName "Home" -Icon home
     New-UDSideNavItem -Text "Map" -PageName "Map" -Icon map
     New-UDSideNavItem -Text "Network usage" -PageName "NetworkUsage" -Icon wifi

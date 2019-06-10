@@ -22,8 +22,8 @@ $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network us
     New-UDImage -Path "$env:HOME/boatdata/datausage.png" -Width 320 -Height 240
 }
 $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
-    New-UDTable -Title Services -Headers Name,Running -Endpoint {
-        $Services | Out-UDTableData -Property Name,Running
+    New-UDTable -Title Services -Headers 'Name','Running' -Endpoint {
+        $Services | Out-UDTableData -Property 'Name','Running'
     }
 }
 

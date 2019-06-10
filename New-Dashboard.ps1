@@ -5,7 +5,10 @@ $Page_Home = New-UDPage -Name Home -Icon home -Title "Home" -Content {
     New-UDCard -Title "Home"
 }
 $Page_Map = New-UDPage -Name Map -Icon map -Title "Map" -Content {
-    New-UDHtml -Markup "<iframe src=`"$($Data.GPS.GuleSider)`", width=`"800`" height=`"600`"></iframe>"
+    New-UDHtml -Markup "<iframe src=`"$($Data.GPS.GuleSider)`", width=`"640`" height=`"480`"></iframe>"
+    New-UDCard -Title "Open in seperate tab" -Content {
+        New-UDLink -Text "Gule sider" -Url $Data.GPS.GuleSider -Icon external-link -OpenInNewWindow
+    }
 }
 $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network usage" -Content {
     New-UDImage -Path "$env:HOME/boatdata/datausage.png" -Width 320 -Height 240

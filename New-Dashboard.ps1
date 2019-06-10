@@ -1,5 +1,8 @@
 . $PSScriptRoot/Get-BoatReport.ps1
+. $PSScriptRoot/Get-WeatherReport.ps1
+
 $Data = Get-BoatReport
+$WeatherReport = Get-WeatherReport
 
 $Services = @()
 Foreach ($Key in $Data.System.Services.keys) {
@@ -18,6 +21,12 @@ $Page_Map = New-UDPage -Name Map -Icon map -Title "Map" -Content {
         New-UDLink -Text "Gule sider" -Url $Data.GPS.GuleSider -Icon external-link -OpenInNewWindow
     }
 }
+$WeatherHeaders = 'Tid','Status','Temp','Nedbør','Vindstyrke','Vindbeskrivelse','Vindretning'
+$Page_Weather = New-UDPage -Name Weather -Icon cloud_sun -Title Weather -Content {
+    New-UDTable -Title 'Next 24 hours' -Headers $WeatherHeaders -Endpoint {
+        $WeatherReport | Out-UDTableData -Property $WeatherHeaders
+    }
+}
 $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network usage" -Content {
     New-UDImage -Path "$env:HOME/boatdata/datausage.png" -Width 320 -Height 240
 }
@@ -30,13 +39,15 @@ $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
 $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Home" -PageName "Home" -Icon home
     New-UDSideNavItem -Text "Map" -PageName "Map" -Icon map
+    New-UDSideNavItem -Text "Weather" -PageName 'Weather' -Icon cloud_sun
     New-UDSideNavItem -Text "Network usage" -PageName "NetworkUsage" -Icon wifi
     New-UDSideNavItem -Text "System" -PageName "System" -Icon cog
 }
 
 $Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
-    $Page_Home,
-    $Page_Map,
+    $Page_Home
+    $Page_Map
+    $Page_Weather
     $Page_NetworkUsage
     $Page_System
 ) `

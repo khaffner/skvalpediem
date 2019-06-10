@@ -1,6 +1,14 @@
 . $PSScriptRoot/Get-BoatReport.ps1
 $Data = Get-BoatReport
 
+$Services = @()
+Foreach ($Key in $Data.System.Services.keys) {
+    $service = New-Object psobject
+    $service | Add-Member -NotePropertyName 'Name' -NotePropertyValue $Key
+    $service | Add-Member -NotePropertyName 'Running' -NotePropertyValue $Data.System.Services[$Key]
+    $Services += $service
+}
+
 $Page_Home = New-UDPage -Name Home -Icon home -Title "Home" -Content {
     New-UDCard -Title "Home"
 }
@@ -14,13 +22,8 @@ $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network us
     New-UDImage -Path "$env:HOME/boatdata/datausage.png" -Width 320 -Height 240
 }
 $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
-    New-UDCard -Title "System" -Content {
-        New-UDCollection -Content {
-            New-UDCollectionItem -Content {"Uptime: $($Data.System.Uptime.Days) days, $($Data.System.Uptime.Hours) hours"}
-            Foreach ($Service in $Data.System.Services.Keys) {
-                New-UDCollectionItem -Content {"$Service`: $($Data.System.Services[$Service])"}
-            }
-        }
+    New-UDTable -Title Services -Headers Name,Running -Endpoint {
+        $Services | Out-UDTableData -Property Name,Running
     }
 }
 

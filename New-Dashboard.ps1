@@ -11,11 +11,13 @@ $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Network usage" -PageName "NetworkUsage" -Icon wifi
 }
 
-$Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Navigation $Navigation -Pages @(
+$Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
     $Page_Home,
     $Page_Map,
     $Page_NetworkUsage
-)
+) `
+-Navigation $Navigation `
+-Footer (New-UDFooter -Copyright "Kevin Haffner")
 
 Get-UDDashboard | Stop-UDDashboard
 Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080

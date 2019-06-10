@@ -1,6 +1,5 @@
 . $PSScriptRoot/Get-BoatReport.ps1
 $Data = Get-BoatReport
-$NetworkUsageImg = "$env:HOME/boatdata/datausage.png"
 
 $Page_Home = New-UDPage -Name Home -Icon home -Title "Home" -Content {
     New-UDCard -Title "Home"
@@ -9,8 +8,7 @@ $Page_Map = New-UDPage -Name Map -Icon map -Title "Map" -Content {
     New-UDHtml -Markup "<iframe src=`"$($Data.GPS.GuleSider)`", width=`"800`" height=`"600`"></iframe>"
 }
 $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network usage" -Content {
-    New-UDImage -Path $NetworkUsageImg -Width 320 -Height 240
-    New-UDLink -Text "Full size" -Url $NetworkUsageImg -OpenInNewWindow
+    New-UDImage -Path "$env:HOME/boatdata/datausage.png" -Width 320 -Height 240
 }
 
 $Navigation = New-UDSideNav -Content {

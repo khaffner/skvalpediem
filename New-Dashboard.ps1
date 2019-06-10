@@ -17,6 +17,9 @@ $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
     New-UDCard -Title "System" -Content {
         New-UDCollection -Content {
             New-UDCollectionItem -Content {"Uptime: $($Data.System.Uptime.Days) days, $($Data.System.Uptime.Hours) hours"}
+            Foreach ($Service in $Data.System.Services.Keys) {
+                New-UDCollectionItem -Content {"$Service`: $($Data.System.Services[$Service])"}
+            }
         }
     }
 }

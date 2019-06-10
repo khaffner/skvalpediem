@@ -16,7 +16,7 @@ $Page_NetworkUsage = New-UDPage -Name NetworkUsage -Icon wifi -Title "Network us
 $Page_System = New-UDPage -Name System -Icon cogs -Title "System" -Content {
     New-UDCard -Title "System" -Content {
         New-UDCollection -Content {
-            New-UDCollectionItem -Content "Uptime: $($Data.System.Uptime.Days) days, $($Data.System.Uptime.Hours) hours"
+            New-UDCollectionItem -Content {"Uptime: $($Data.System.Uptime.Days) days, $($Data.System.Uptime.Hours) hours"}
         }
     }
 }

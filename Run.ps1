@@ -1,4 +1,4 @@
-. $PSScriptRoot/Get-BoatReport.ps1
+. $PSScriptRoot/Functions/Get-BoatReport.ps1
 
 $DataDir = "$env:HOME/boatdata"
 
@@ -16,4 +16,4 @@ $Data += (Get-Content "$DataDir/rawdata.json" -ErrorAction SilentlyContinue | Co
 $Data += $NewData
 $Data | ConvertTo-Json -Depth 10 | Out-File -FilePath "$DataDir/rawdata.json" -Force | Out-Null
 
-. $PSScriptRoot/New-Dashboard.ps1
+. $PSScriptRoot/Functions/New-Dashboard.ps1

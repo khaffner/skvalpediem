@@ -6,7 +6,7 @@ if(!(Test-Path $DataDir)) {
     New-Item $Datadir -ItemType Directory
 }
 
-$NetworkInterfaces = ((ip link show | Select-String -Pattern ': ').Line.Split(': ') | select -Index 4,7) -join '+'
+$NetworkInterfaces = ((ifconfig | Select-String '^[a-z0-9]{2,}' -AllMatches).Matches.Value | Where-Object {$_ -ne 'lo'}) -join '+'
 vnstati -vs -i $NetworkInterfaces -o "$DataDir/datausage.png"
 
 $NewData = Get-BoatReport

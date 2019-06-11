@@ -55,4 +55,4 @@ $Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
 -Footer (New-UDFooter -Copyright "Last updated: $($Data.TimeStampFriendly)")
 
 Get-UDDashboard | Stop-UDDashboard
-Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080
+Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080 -Wait

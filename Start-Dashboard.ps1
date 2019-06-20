@@ -21,5 +21,5 @@ $Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
         }
     }
 ) -Navigation $Navigation
-
+Get-UDDashboard | Stop-UDDashboard
 Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080

@@ -5,7 +5,7 @@ $LogDir = "$env:HOME/boatdata/"
 $GPSData = Get-ChildItem "$LogDir/gpsdata" | Select-Object -Last 1 | Import-Csv -Delimiter ';'
 
 ### Dashboard ###
-$Navigation = New-UDSideNav -Fixed -Content {
+$Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Home" -PageName "home" -Icon home
     New-UDSideNavItem -Text "Map" -PageName "map" -Icon map
 }

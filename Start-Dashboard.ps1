@@ -1,5 +1,5 @@
 #$WeatherHeaders = 'Tid', 'Status', 'Temp', 'Nedbør', 'Vindstyrke', 'Vindbeskrivelse', 'Vindretning'
-$LogDir = "$env:HOME/boatdata/"
+$LogDir = "/home/pi/boatdata/"
 
 ### Get Data ###
 $GPSData = Get-ChildItem "$LogDir/gpsdata" | Select-Object -Last 1 | Import-Csv -Delimiter ';'

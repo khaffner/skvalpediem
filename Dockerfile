@@ -1,13 +1,14 @@
 FROM mcr.microsoft.com/powershell:ubuntu-18.04
 
-RUN apt-get update >/dev/null
-RUN apt-get install -y net-tools vnstat vnstati >/dev/null
+RUN useradd -m pi
 
-RUN vnstat --create -i eth0
+RUN apt-get update >/dev/null
+RUN apt-get install -y net-tools >/dev/null
+
+USER pi
+WORKDIR /home/pi
 
 SHELL [ "pwsh","-Command" ]
 RUN Install-Module Universaldashboard.Community -Force -AcceptLicense
 
-ADD . /home/pi/code/skvalpediem/
-
-CMD [ "pwsh","-command","& ./home/pi/code/skvalpediem/Run.ps1" ]
+EXPOSE 8080

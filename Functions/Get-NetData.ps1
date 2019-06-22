@@ -5,6 +5,5 @@ Function Get-NetData {
         HasInternet = (($IpifyRequest).StatusDescription -EQ "OK")
         ExternalIP  = $IpifyRequest.Content
         InternalIP  = ((hostname -I).Split(' ') | Select-Object -SkipLast 1)
-        Traffic     = (vnstat --json | ConvertFrom-Json -AsHashtable)
     }
 }

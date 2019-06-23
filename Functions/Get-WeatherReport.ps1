@@ -1,24 +1,42 @@
 function Get-WeatherReport {
     [CmdletBinding()]
     param (
-        [string]$YrLocation = 'Norge/Oslo/Oslo/Oslo'
+        [string]$Latitude = '59.0000',
+        [string]$Longtitude = '10.0000'
     )
     
     begin {
-        [xml]$XML =Invoke-RestMethod -Uri "https://www.yr.no/sted/$YrLocation/varsel_time_for_time.xml" -DisableKeepAlive
-        $Next24H = $XML.weatherdata.forecast.tabular.time | Select-Object -First 24
+        [xml]$XML = Invoke-RestMethod -Uri "https://api.met.no/weatherapi/locationforecast/1.9/?lat=$Lat&lon=$Lon" -DisableKeepAlive
+        $RawWeather = $XML.weatherdata.product.time
+
+        $Date = Get-Date -Format yyyy-MM-dd
+        [xml]$XML = Invoke-RestMethod -Uri "https://api.met.no/weatherapi/sunrise/2.0/?lat=$Latitude&lon=$Longtitude&date=$Date&offset=+02:00" -DisableKeepAlive
     }
     
     process {
-        Foreach ($Entry in $Next24H) {
+            0..23 | ForEach-Object {
+            $Time = (Get-Date).AddHours($PSItem)
+            $TimeAdjusted = (Get-Date $Time).AddHours(-2) # -2 because timezone and I'm lazy
+            $TimeString = (Get-Date $TimeAdjusted -Format 'yyyy-MM-ddTHH')
+
+            [Datetime]$Sunset = $XML.astrodata.location.time.sunset.time
+            [Datetime]$SunRise = $XML.astrodata.location.time.sunrise.time
+            if($Time -lt $Sunset -and $Time -gt $Sunrise) {$IsNight = '0'}
+            else {$IsNight = '1'}
+
+            $TempWind = ($RawWeather | Where-Object from -Like $TimeString*)[0].Location
+            $Precip = ($RawWeather | Where-Object from -Like $TimeString*)[1].Location
+
             $Forecast = New-Object psobject
-            $Forecast | Add-Member -NotePropertyName Tid -NotePropertyValue (Get-Date $Entry.from -Format 'HH:mm')
-            $Forecast | Add-Member -NotePropertyName Status -NotePropertyValue ($Entry.symbol.name)
-            $Forecast | Add-Member -NotePropertyName Temp -NotePropertyValue ($Entry.temperature.value)
-            $Forecast | Add-Member -NotePropertyName Nedbør -NotePropertyValue ($Entry.precipitation.value)
-            $Forecast | Add-Member -NotePropertyName Vindstyrke -NotePropertyValue ($Entry.windSpeed.mps)
-            $Forecast | Add-Member -NotePropertyName Vindbeskrivelse -NotePropertyValue ($Entry.windSpeed.name)
-            $Forecast | Add-Member -NotePropertyName Vindretning -NotePropertyValue ($Entry.windDirection.name)
+            $Forecast | Add-Member -NotePropertyName 'Tid' -NotePropertyValue (Get-Date $Time -Format 'HH:00')
+            $Forecast | Add-Member -NotePropertyName 'Temp(c)' -NotePropertyValue $TempWind.temperature.value
+            $Forecast | Add-Member -NotePropertyName 'Nedbør(mm)' -NotePropertyValue $Precip.precipitation.value
+            $Forecast | Add-Member -NotePropertyName 'Skydekke(%)' -NotePropertyValue $TempWind.cloudiness.percent
+            $Forecast | Add-Member -NotePropertyName 'Vindstyrke(m/s)' -NotePropertyValue $TempWind.windSpeed.mps
+            $Forecast | Add-Member -NotePropertyName 'Vindbeskrivelse' -NotePropertyValue $TempWind.windSpeed.name
+            $Forecast | Add-Member -NotePropertyName 'Vindretning' -NotePropertyValue $TempWind.windDirection.name
+            $Forecast | Add-Member -NotePropertyName 'IconImgUri' -NotePropertyValue "https://api.met.no/weatherapi/weathericon/1.1/?symbol=$($Precip.symbol.number)&is_night=$IsNight&content_type=image/svg"
+
             Write-Output $Forecast
         }
     }

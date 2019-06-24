@@ -13,7 +13,10 @@ if($Schedule -eq '15m') {
 if($Schedule -eq '1h') {
     Get-ProcessReport | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/processreport/$($Timestamp.TimeStampSortable).csv"
     Get-NetData | Select-Object {$_.InternalIP},ExternalIP,HasInternet | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/network/$($Timestamp.TimeStampSortable).csv"
-    Get-WeatherReport | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/weatherreport/$($Timestamp.TimeStampSortable).csv"
+    
+    $g = Get-ChildItem /home/pi/boatdata/gpsdata/ | Select-Object -Last 1 | Import-Csv -Delimiter ';'
+    Get-WeatherReport -Latitude $g.Latitude -Longtitude $g.Longtitude | Out-File -FilePath "$LogDir/weatherreport/$($Timestamp.TimeStampSortable).csv"
+
 }
 if($Schedule -eq '1d') {
 }

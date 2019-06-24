@@ -6,7 +6,7 @@ function Get-WeatherReport {
     )
     
     begin {
-        [xml]$XML = Invoke-RestMethod -Uri "https://api.met.no/weatherapi/locationforecast/1.9/?lat=$Lat&lon=$Lon" -DisableKeepAlive
+        [xml]$XML = Invoke-RestMethod -Uri "https://api.met.no/weatherapi/locationforecast/1.9/?lat=$Latitude&lon=$Longtitude" -DisableKeepAlive
         $RawWeather = $XML.weatherdata.product.time
 
         $Date = Get-Date -Format yyyy-MM-dd

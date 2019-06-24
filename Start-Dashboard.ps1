@@ -3,6 +3,7 @@ $LogDir = "/home/pi/boatdata/"
 
 ### Get Data ###
 $GPSData = Get-ChildItem "$LogDir/gpsdata" | Select-Object -Last 1 | Import-Csv -Delimiter ';'
+$WeatherData = Get-ChildItem "$LogDir/weatherreport" | Select-Object -Last 1 | Import-Csv -Delimiter ';'
 $Timestamp = Get-Date -Format 'dd.MM.yyyy HH:mm'
 
 ### Dashboard ###
@@ -15,7 +16,7 @@ $Footer = New-UDFooter -Copyright "Last updated: $Timestamp"
 
 $Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
     New-UDPage -Name Home -Icon home -Title "Home" -Content {
-        New-UDCard -Title "Home"
+        New-UDImage -Url $WeatherData.IconImgUri[0]
     }
     New-UDPage -Name Map -Icon map -Title "Map" -Content {
         New-UDHtml -Markup "<iframe src=`"$($GPSData.GuleSider)`", width=`"640`" height=`"480`"></iframe>"

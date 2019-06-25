@@ -1,5 +1,5 @@
 #$WeatherHeaders = 'Tid', 'Status', 'Temp', 'Nedbør', 'Vindstyrke', 'Vindbeskrivelse', 'Vindretning'
-$LogDir = "/home/pi/boatdata/"
+$LogDir = "$env:HOME/boatdata/"
 
 ### Get Data ###
 $GPSData = Get-ChildItem "$LogDir/gpsdata" | Select-Object -Last 1 | Import-Csv -Delimiter ';'
@@ -25,5 +25,4 @@ $Dashboard = New-UDDashboard -Title "Skvalpe Diem" -Pages @(
         }
     }
 ) -Navigation $Navigation -Footer $Footer
-Get-UDDashboard | Stop-UDDashboard
-Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080 -Wait
+Start-UDDashboard -Dashboard $Dashboard -Name SkvalpeDiem -Port 8080 -Wait -AutoReload

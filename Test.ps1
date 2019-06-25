@@ -12,5 +12,4 @@ docker run `
     -v /home/kevin/code/skvalpediem:/home/pi/code/skvalpediem `
     --name skvalpediem `
     skvalpediem
-docker exec skvalpediem pwsh /home/pi/code/skvalpediem/Start-Dashboard.ps1 | Out-Null
-Start-Process http://localhost:8080
+docker exec skvalpediem pwsh /home/pi/code/skvalpediem/Start-Dashboard.ps1

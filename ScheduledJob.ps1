@@ -2,10 +2,10 @@ param(
     [string]$Schedule
 )
 
-Get-ChildItem /home/pi/code/skvalpediem/Functions | Import-Module -Force
+Get-ChildItem "$env:HOME/code/skvalpediem/Functions" | Import-Module -Force
 $Timestamp = Get-Timestamp
 
-$LogDir = "/home/pi/boatdata"
+$LogDir = "$env:HOME/boatdata"
 
 if($Schedule -eq '15m') {
     Get-GPSData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/gpsdata/$($Timestamp.TimeStampSortable).csv"

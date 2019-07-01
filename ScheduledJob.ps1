@@ -12,18 +12,18 @@ TD {border-width: 1px; padding: 3px; border-style: solid; border-color: black;}
 $Timestamp = Get-Timestamp
 
 $GPSData = Get-GPSData
-$GPSData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/gpsdata/$($Timestamp.TimeStampSortable).csv"
+$GPSData | Export-Csv -Delimiter ';' -Path "$LogDir/gpsdata/$($Timestamp.TimeStampSortable).csv" -Force
 
 $ProcessReport = Get-ProcessReport 
-$ProcessReport | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/processreport/$($Timestamp.TimeStampSortable).csv"
+$ProcessReport | Export-Csv -Delimiter ';' -Path "$LogDir/processreport/$($Timestamp.TimeStampSortable).csv"
 $ProcessReport | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/processreport.html" -Force
 
 $NetData = Get-NetData | Select-Object @{Name = 'InternalIP'; E = {$_.InternalIP}}, ExternalIP, HasInternet
-$NetData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/netdata/$($Timestamp.TimeStampSortable).csv"
+$NetData | Export-Csv -Delimiter ';' -Path "$LogDir/netdata/$($Timestamp.TimeStampSortable).csv"
 $NetData | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/netdata.html" -Force
 
 $WeatherData = Get-WeatherReport -Latitude $GPSData.Latitude -Longtitude $GPSData.Longtitude
-$WeatherData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/weatherdata/$($Timestamp.TimeStampSortable).csv"
+$WeatherData | Export-Csv -Delimiter ';' -Path "$LogDir/weatherdata/$($Timestamp.TimeStampSortable).csv"
 $WeatherData | Select-Object -Property * -ExcludeProperty IconImgUri | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/weatherreport.html" -Force
 
 $Index = @"

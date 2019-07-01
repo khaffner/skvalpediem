@@ -17,8 +17,8 @@ function Get-WeatherReport {
             $TimeString = (Get-Date $TimeAdjusted -Format 'yyyy-MM-ddTHH')
 
             $TempWind = ($RawWeather | Where-Object from -Like $TimeString*)[0].Location
-            $Precip = ($RawWeather | Where-Object from -Like $TimeString*)[1].Location
-
+            $Precip = ($RawWeather | Where-Object from -Like $TimeString*)[-1].Location
+            
             $Forecast = New-Object psobject
             $Forecast | Add-Member -NotePropertyName 'Tid' -NotePropertyValue (Get-Date $Time -Format 'HH:00')
             $Forecast | Add-Member -NotePropertyName 'Temp(c)' -NotePropertyValue $TempWind.temperature.value

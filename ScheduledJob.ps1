@@ -26,27 +26,5 @@ $WeatherData = Get-WeatherReport -Latitude $GPSData.Latitude -Longtitude $GPSDat
 $WeatherData | Export-Csv -Delimiter ';' -Path "$LogDir/weatherdata/$($Timestamp.TimeStampSortable).csv"
 $WeatherData | Select-Object -Property * -ExcludeProperty IconImgUri | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/weatherreport.html" -Force
 
-$Index = @"
-<!DOCTYPE html>
-<html>
-<head>
-<title>Skvalpe Diem</title>
-</head>
-<body>
-
-<p>
-<iframe src="$($GPSData.GuleSider)" width="800" height="600"></iframe>
-</p>
-
-<p>
-<a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
-</p>
-
-<p>
-Last updated: $($Timestamp.TimeStampFriendly)
-</p>
-
-</body>
-</html>
-"@
-$Index | Out-File -FilePath "$LogDir/webpages/index.html" -Force
+$Template = Get-Content -Path "./indextemplate.html"
+$ExecutionContext.InvokeCommand.ExpandString($template) | Out-File -FilePath "$LogDir/webpages/index.html" -Force

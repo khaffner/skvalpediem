@@ -45,9 +45,6 @@ $Index = @"
 <p>
 <a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
 </p>
-<p>
-$($WeatherData[0].'Temp(c)') grader
-</p>
 
 </body>
 </html>

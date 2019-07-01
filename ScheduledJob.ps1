@@ -1,5 +1,13 @@
 Get-ChildItem "$env:HOME/code/skvalpediem/Functions" | Import-Module -Force
 $LogDir = "$env:HOME/boatdata"
+	
+$Header = @"
+<style>
+TABLE {border-width: 1px; border-style: solid; border-color: black; border-collapse: collapse;}
+TH {border-width: 1px; padding: 3px; border-style: solid; border-color: black; background-color: #6495ED;}
+TD {border-width: 1px; padding: 3px; border-style: solid; border-color: black;}
+</style>
+"@
 
 $Timestamp = Get-Timestamp
 
@@ -8,10 +16,40 @@ $GPSData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/gpsdata/$(
 
 $ProcessReport = Get-ProcessReport 
 $ProcessReport | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/processreport/$($Timestamp.TimeStampSortable).csv"
+$ProcessReport | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/processreport.html" -Force
 
-$NetData = Get-NetData | Select-Object { $_.InternalIP }, ExternalIP, HasInternet 
+$NetData = Get-NetData | Select-Object @{Name = 'InternalIP'; E = {$_.InternalIP}}, ExternalIP, HasInternet
 $NetData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/netdata/$($Timestamp.TimeStampSortable).csv"
+$NetData | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/netdata.html" -Force
 
 $WeatherData = Get-WeatherReport -Latitude $GPSData.Latitude -Longtitude $GPSData.Longtitude
 $WeatherData | ConvertTo-Csv -Delimiter ';' | Out-File -FilePath "$LogDir/weatherdata/$($Timestamp.TimeStampSortable).csv"
+$WeatherData | Select-Object -Property * -ExcludeProperty IconImgUri | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/weatherreport.html" -Force
 
+$Index = @"
+<!DOCTYPE html>
+<html>
+<head>
+<title>Skvalpe Diem</title>
+</head>
+<body>
+
+<p>
+<iframe src="$($GPSData.GuleSider)" width="800" height="600"></iframe>
+</p>
+
+<p>
+<a href="$($GPSData.GuleSider)">Gule Sider</a>
+</p>
+
+<p>
+<a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
+</p>
+<p>
+$($WeatherData[0].'Temp(c)') grader
+</p>
+
+</body>
+</html>
+"@
+$Index | Out-File -FilePath "$LogDir/webpages/index.html" -Force

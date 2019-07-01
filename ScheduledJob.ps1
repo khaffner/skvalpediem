@@ -39,10 +39,6 @@ $Index = @"
 </p>
 
 <p>
-<a href="$($GPSData.GuleSider)">Gule Sider</a>
-</p>
-
-<p>
 <a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
 </p>
 

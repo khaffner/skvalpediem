@@ -6,19 +6,23 @@
 </head>
 
 <body>
-
-    <p>
-        <iframe src="$($GPSData.GuleSider)" width="800" height="600"></iframe>
-    </p>
-
-    <p>
-        <a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
-    </p>
-
-    <p>
-        Last updated: $($Timestamp.TimeStampFriendly)
-    </p>
-
+    <table style="width: fit-content">
+        <tbody>
+            <tr>
+                <td colspan="5"><iframe src="$($GPSData.GuleSider)" width="768" height="677"></iframe></td>
+            </tr>
+            <tr>
+                <td colspan="5"><iframe src="https://api.met.no/weatherapi/radar/1.5/?radarsite=southeast_norway&type=reflectivity&content=animation" width="768" height="677"></iframe></td>
+            </tr>
+            <tr>
+                <td><a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a></td>
+                <td><a href="weatherreport.html"><img src="$($WeatherData[1].IconImgUri)"></a></td>
+                <td><a href="weatherreport.html"><img src="$($WeatherData[2].IconImgUri)"></a></td>
+                <td><a href="weatherreport.html"><img src="$($WeatherData[3].IconImgUri)"></a></td>
+                <td><a href="weatherreport.html"><img src="$($WeatherData[4].IconImgUri)"></a></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>

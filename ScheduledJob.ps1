@@ -46,6 +46,10 @@ $Index = @"
 <a href="weatherreport.html"><img src="$($WeatherData[0].IconImgUri)"></a>
 </p>
 
+<p>
+Last updated: $($Timestamp.TimeStampFriendly)
+</p>
+
 </body>
 </html>
 "@

@@ -1,4 +1,4 @@
-Get-ChildItem "$env:HOME/code/skvalpediem/Functions" | Import-Module -Force
+Get-ChildItem "$env:HOME/code/skvalpediem/Functions" -Filter '*.ps1' | Import-Module -Force
 $LogDir = "$env:HOME/boatdata"
 	
 $Header = @"

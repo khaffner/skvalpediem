@@ -28,6 +28,7 @@ $WeatherData | Select-Object -Property * -ExcludeProperty IconImgUri | ConvertTo
 
 $BatteryData = Get-BatteryData -Count 3
 $BatteryData | Export-Csv -Delimiter ';' -Path "$LogDir/batterydata/$($Timestamp.TimeStampSortable).csv"
+$VoltageArr = Get-ChildItem "$LogDir/batterydata/" | Select-Object -Last 6 | Import-Csv -Delimiter ';' | Select-Object -ExpandProperty Voltage
 
 $Template = Get-Content -Path "$PSScriptRoot/indextemplate.html"
 $ExecutionContext.InvokeCommand.ExpandString($template) | Out-File -FilePath "$LogDir/webpages/index.html" -Force

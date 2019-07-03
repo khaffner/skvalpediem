@@ -11,7 +11,8 @@ function Get-Voltage {
         }
     }
     if ($Voltage.Count -eq $Count) {
-        return ($Voltage | Measure-Object -Average).Average
+        $AvgVoltage = ($Voltage | Measure-Object -Average).Average
+        return [Math]::Round($AvgVoltage,2)
     }
     else {
         return 0

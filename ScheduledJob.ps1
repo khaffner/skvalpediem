@@ -26,7 +26,7 @@ $WeatherData = Get-WeatherReport -Latitude $GPSData.Latitude -Longtitude $GPSDat
 $WeatherData | Export-Csv -Delimiter ';' -Path "$LogDir/weatherdata/$($Timestamp.TimeStampSortable).csv"
 $WeatherData | Select-Object -Property * -ExcludeProperty IconImgUri | ConvertTo-Html -Charset UTF8 -Head $Header | Out-File -FilePath "$LogDir/webpages/weatherreport.html" -Force
 
-$BatteryData = Get-Voltage -Count 3
+$BatteryData = Get-BatteryData -Count 3
 $BatteryData | Export-Csv -Delimiter ';' -Path "$LogDir/batterydata/$($Timestamp.TimeStampSortable).csv"
 
 $Template = Get-Content -Path "$PSScriptRoot/indextemplate.html"

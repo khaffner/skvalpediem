@@ -11,9 +11,6 @@ mkdir ~/powershell
 tar -xvf ./powershell-6.2.1-linux-arm32.tar.gz -C ~/powershell
 sudo ln -s ~/powershell/pwsh /usr/bin/pwsh
 
-# Install Powershell Universal Dashboard
-pwsh -Command "& {Install-Module Universaldashboard.Community -Force -AcceptLicense}"
-
 # Set baud rade, assuming device is ttyUSB0
 sudo stty -F /dev/ttyUSB0 4800 # Not permanent?
 

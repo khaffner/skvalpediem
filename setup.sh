@@ -20,6 +20,9 @@ echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee -a /etc/apt/so
 sudo apt update
 sudo apt install syncthing -y
 
+# Install Sense-Hat
+sudo apt-get install sense-hat -y
+
 sudo reboot
 
 # gpsd config

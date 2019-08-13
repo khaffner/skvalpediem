@@ -6,8 +6,12 @@ Named after the boat I'm part owner of. This repo contains code for logging data
   - Linux distro for Raspberry Pi
 - Pwsh
   - My preferred scripting language
+- Python
+  - Where necessary
 - http://osoyoo.com/driver/voltage.py
   - Script that gets the actual voltage. Slightly modified by me for this project.
+- SenseHat python module
+  - For getting the raw data off of the SenseHat hardware.
 - gpsd
   - Daemon for GPS signals
 - gpsd-clients
@@ -34,8 +38,5 @@ Named after the boat I'm part owner of. This repo contains code for logging data
   - The computer
 - GlobalSat BU-353S4
   - GPS receiver
-- MCP3008
-  - Analog to Digital converter
-- Voltage Sensor VCC<25V
-  - Divides input voltage by 5. 25V --> 5V
-- Breadboard and wires
+- SenseHat
+  - Raspberry Pi shield with lots of sensors and other stuff

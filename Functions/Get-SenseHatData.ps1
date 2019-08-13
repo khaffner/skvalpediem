@@ -12,7 +12,13 @@ function Get-SenseHatData {
         $Obj | Add-Member -NotePropertyName $AxisName -NotePropertyValue $AxisValue
     }
 
-    $Obj | Add-Member -NotePropertyName "Compass" -NotePropertyValue ([System.Math]::Round($Raw[1],0))
+    $CompassDegree = ([System.Math]::Round($Raw[1],0))
+    $CompassDegree = $CompassDegree + 235 # correct for rotation and weird measurement
+    if($CompassDegree -ge 360) {
+        $CompassDegree = $CompassDegree - 360
+    }
+    $Obj | Add-Member -NotePropertyName "Compass" -NotePropertyValue $CompassDegree
+    
     $Obj | Add-Member -NotePropertyName "Humidity" -NotePropertyValue ([System.Math]::Round($Raw[2],0))
     $Obj | Add-Member -NotePropertyName "Pressure" -NotePropertyValue ([System.Math]::Round($Raw[3],2))
     $Obj

@@ -32,6 +32,7 @@ $VoltageArr = Get-ChildItem "$LogDir/batterydata/" | Select-Object -Last 6 | Imp
 
 $SenseHatData = Get-SenseHatData
 $SenseHatData | Export-Csv -Delimiter ';' -Path "$LogDir/sensehatdata/$($Timestamp.TimeStampSortable).csv"
+$CompassArr = Get-ChildItem "$LogDir/sensehatdata/" | Select-Object -Last 6 | Import-Csv -Delimiter ';' | Select-Object -ExpandProperty Compass
 
 $Template = Get-Content -Path "$PSScriptRoot/indextemplate.html"
 $ExecutionContext.InvokeCommand.ExpandString($template) | Out-File -FilePath "$LogDir/webpages/index.html" -Force
